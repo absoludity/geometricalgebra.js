@@ -1,0 +1,6 @@
+node_modules
+
+# Vim
+.*.s[a-w][a-z]
+*.un~
+*~

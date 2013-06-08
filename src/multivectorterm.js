@@ -1,3 +1,5 @@
+define(['underscore'], function(_) {
+
 var isArrayOfInts = function(obj) {
     if (_.isUndefined(obj) || !_.isArray(obj) || _.isEmpty(obj)) {
         return false;
@@ -10,6 +12,7 @@ var isArrayOfInts = function(obj) {
     });
     return all_ints;
 };
+
 
 function MultiVectorTerm(factor, basis) {
     if (isNaN(factor)) {
@@ -24,4 +27,10 @@ function MultiVectorTerm(factor, basis) {
 
     this.factor = factor;
     this.basis = basis;
+};
+
+return {
+    MultiVectorTerm: MultiVectorTerm
 }
+
+});

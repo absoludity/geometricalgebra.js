@@ -26,7 +26,8 @@ module.exports = function(grunt) {
                 "test": true,
                 "ok": true,
                 "throws": true,
-                "equal": true
+                "equal": true,
+                "deepEqual": true
             }
         }
     }

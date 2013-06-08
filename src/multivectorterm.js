@@ -1,6 +1,6 @@
 define(['underscore', 'utils'], function(_, utils) {
 
-function MultiVectorTerm(factor, basis) {
+var MultiVectorTerm = function(factor, basis) {
     if (isNaN(factor)) {
         throw new TypeError(
             "The factor for a MultiVectorTerm must be a number.");
@@ -13,7 +13,7 @@ function MultiVectorTerm(factor, basis) {
 
     this.factor = factor;
     this.basis = basis;
-}
+};
 
 return {
     MultiVectorTerm: MultiVectorTerm

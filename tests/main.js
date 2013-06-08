@@ -1,7 +1,9 @@
 require.config({
     //baseUrl: "./..",
     paths: {
-        "underscore": "../lib/underscore-min"
+        "underscore": "../lib/underscore-min",
+        "multivectorterm": "../src/multivectorterm",
+        "utils": "../src/utils"
     },
     shim: {
         underscore: {
@@ -11,6 +13,6 @@ require.config({
 });
 
 
-require(["tests.js"], function() {
+require(["test_multivectorterm", "test_utils"], function() {
     QUnit.start();
 });

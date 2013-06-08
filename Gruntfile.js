@@ -14,8 +14,20 @@ module.exports = function(grunt) {
         options: {
             "curly": true,
             "eqnull": true,
+            "eqeqeq": true,
             "unused": true,
-            "eqeqeq": true
+            "undef": true,
+            "globals": {
+                "module": true,
+                "define": true,
+                "require": true,
+                // QUnit and it's assertions.
+                "QUnit": true,
+                "test": true,
+                "ok": true,
+                "throws": true,
+                "equal": true
+            }
         }
     }
   });

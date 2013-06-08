@@ -10,8 +10,7 @@ require.config({
     }
 });
 
-QUnit.config.autostart = false;
 
 require(["tests.js"], function() {
-    //QUnit.start();
+    QUnit.start();
 });

@@ -17,6 +17,21 @@ var MultiVectorTerm = function(factor, basis) {
     this.basis = simplified.list;
 };
 
+
+MultiVectorTerm.prototype.mul = function(value) {
+    if (_.isNumber(value)) {
+        return new MultiVectorTerm(value * this.factor, this.basis);
+    } else if (value instanceof MultiVectorTerm) {
+        return new MultiVectorTerm(this.factor * value.factor,
+                                   this.basis.concat(value.basis));
+    } else {
+        throw new TypeError(
+            "A MultiVectorTerm can only be multiplied by another " +
+            "MultiVectorTerm or a number.");
+    }
+};
+
+
 return {
     MultiVectorTerm: MultiVectorTerm
 };

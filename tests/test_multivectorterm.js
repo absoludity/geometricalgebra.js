@@ -1,6 +1,7 @@
 define(['underscore', 'multivectorterm'], function(_, mvt) {
 
-module("MultiVectorTerm Tests");
+
+module("MultiVectorTerm constructor checks.");
 
 
 test("MultiVectorTerm factor sets state.", function() {
@@ -73,6 +74,89 @@ test("MultiVectorTerms are simplified on creation.", function() {
         equal(term.factor, example.expected_factor,
             "The factor has the correct sign depending on basis vector " +
             "simplification.");
+    });
+});
+
+
+module("MultiVectorTerm add checks.");
+
+
+test("Multiplying by something other than a multivector term of " +
+     "number fails.", function() {
+    var examples = [
+        null,
+        "hello",
+        'c',
+    ];
+    var term = new mvt.MultiVectorTerm(3.5, [1]);
+
+    _.each(examples, function(example) {
+        throws(function() { term.mul(example); },
+               TypeError,
+               "A MultiVectorTerm cannot be multiplied by " + example);
+    });
+});
+
+
+test("Multiypling by a number results in simply multiplication.", function() {
+    var examples = [{
+        term: new mvt.MultiVectorTerm(1.5, [1, 2]), factor: 2,
+        expected_term: new mvt.MultiVectorTerm(3, [1, 2])
+    }, {
+        term: new mvt.MultiVectorTerm(1.5, [1, 2]), factor: -3.5,
+        expected_term: new mvt.MultiVectorTerm(-5.25, [1, 2])
+    }];
+
+    _.each(examples, function(example) {
+        var result = example.term.mul(example.factor);
+        deepEqual(result, example.expected_term,
+                  "Multipling by a number results in scalar multiplication.");
+    });
+});
+
+
+test("Multiplying by a MultiVectorTerm.", function() {
+    var examples = [{
+        term: new mvt.MultiVectorTerm(1.5, [1, 2]),
+        multiplicand: new mvt.MultiVectorTerm(-2, [2, 3]),
+        expected_term: new mvt.MultiVectorTerm(-3.0, [1, 3])
+    }, {
+        term: new mvt.MultiVectorTerm(1.5, [1, 2]),
+        multiplicand: new mvt.MultiVectorTerm(-2, [1, 2]),
+        expected_term: new mvt.MultiVectorTerm(3.0, [])
+    }];
+    _.each(examples, function(example) {
+        var result = example.term.mul(example.multiplicand);
+        deepEqual(result, example.expected_term,
+                  "Multipling by a MultiVectorTerm is a vector product.");
+    });
+});
+
+
+test("Multiplication can be chained.", function() {
+    var examples = [{
+        multiplicands: [
+            new mvt.MultiVectorTerm(1.5, [1, 2]),
+            new mvt.MultiVectorTerm(-3.5, [2, 3]),
+            new mvt.MultiVectorTerm(1.0, [1, 3])
+        ],
+        expected_term: new mvt.MultiVectorTerm(5.25, [])
+    }, {
+        multiplicands: [
+            new mvt.MultiVectorTerm(1.5, [1, 2]),
+            new mvt.MultiVectorTerm(-3.5, [1, 3]),
+            new mvt.MultiVectorTerm(1.0, [1])
+        ],
+        expected_term: new mvt.MultiVectorTerm(5.25, [1, 2, 3])
+    }];
+
+    _.each(examples, function(example) {
+        var result = _.head(example.multiplicands);
+        _.each(_.tail(example.multiplicands), function(multiplicand) {
+            result = result.mul(multiplicand);
+        });
+
+        deepEqual(result, example.expected_term);
     });
 });
 

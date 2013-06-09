@@ -32,6 +32,25 @@ MultiVectorTerm.prototype.mul = function(value) {
 };
 
 
+MultiVectorTerm.THREE_DIMENSION_LABELS = ['', 'x', 'y', 'z'];
+
+
+MultiVectorTerm.prototype.toString = function(options) {
+    var basis_str;
+    if ((_.isObject(options) && _.has(options, 'xyz') && !options.xyz) ||
+        (_.max(this.basis) > 3)) {
+        basis_str = _.map(this.basis, function(dimension) {
+            return "e" + dimension;
+        }).join("");
+    } else {
+        basis_str = _.map(this.basis, function(dimension) {
+            return MultiVectorTerm.THREE_DIMENSION_LABELS[dimension];
+        }).join("");
+    }
+    return this.factor + basis_str;
+};
+
+
 return {
     MultiVectorTerm: MultiVectorTerm
 };

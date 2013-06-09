@@ -78,7 +78,7 @@ test("MultiVectorTerms are simplified on creation.", function() {
 });
 
 
-module("MultiVectorTerm add checks.");
+module("MultiVectorTerm multiplication checks.");
 
 
 test("Multiplying by something other than a multivector term of " +
@@ -158,6 +158,57 @@ test("Multiplication can be chained.", function() {
 
         deepEqual(result, example.expected_term);
     });
+});
+
+
+module("MultiVectorTerm toString checks.");
+
+
+test("Defaults to x, y, z for <= 3 basis vectors.", function() {
+    var examples = [{
+        term: new mvt.MultiVectorTerm(1.5, [1, 2]),
+        out: "1.5xy"
+    }, {
+        term: new mvt.MultiVectorTerm(-2.345, [1, 2, 3]),
+        out: "-2.345xyz"
+    }];
+
+    _.each(examples, function(example) {
+        equal(example.term.toString(), example.out);
+    });
+
+});
+
+
+test("Can explicitly request e1, e2 notation for basis vectors.", function() {
+    var examples = [{
+        term: new mvt.MultiVectorTerm(1.5, [1, 2]),
+        out: "1.5e1e2"
+    }, {
+        term: new mvt.MultiVectorTerm(-2.345, [1, 2, 3]),
+        out: "-2.345e1e2e3"
+    }];
+
+    _.each(examples, function(example) {
+        equal(example.term.toString({xyz: false}), example.out);
+    });
+});
+
+
+test("Terms with more than 3 dimensions automatically use e1 " +
+     "notation.", function() {
+    var examples = [{
+        term: new mvt.MultiVectorTerm(1.5, [1, 4]),
+        out: "1.5e1e4"
+    }, {
+        term: new mvt.MultiVectorTerm(-2.345, [1, 2, 3, 4, 5]),
+        out: "-2.345e1e2e3e4e5"
+    }];
+
+    _.each(examples, function(example) {
+        equal(example.term.toString(), example.out);
+    });
+
 });
 
 });

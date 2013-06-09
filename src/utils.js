@@ -35,9 +35,50 @@ var bubbleSortCount = function(list) {
     return {list: new_list, swaps: swaps};
 };
 
+
+/*
+ * If two identical basis vectors are adjacent then by definition
+ * the result is identity.
+ */
+var removeIdentities = function(list) {
+    var results = [];
+    var i, size = _.size(list);
+    for(i = 0; i < size - 1; i++) {
+        if (list[i] === list[i+1]) {
+            i++;
+        } else {
+            results[results.length] = list[i];
+        }
+    }
+    if (i === size - 1) {
+        results[results.length] = list[size - 1];
+    }
+    return results;
+};
+
+
+/*
+ * orderBasisVectors - simplify the term by ordering basis vectors.
+ *
+ * After ordering, any identical adjacent basis vectors are
+ * removed as xx == yy == zz == 1.
+ */
+var orderBasisVectors = function(list) {
+
+    var list_swaps = bubbleSortCount(list);
+    return {
+        sign: list_swaps.swaps % 2 === 0 ? 1 : -1,
+        list: removeIdentities(list_swaps.list)
+    };
+
+};
+
 return {
     isArrayOfInts: isArrayOfInts,
-    bubbleSortCount: bubbleSortCount
+    orderBasisVectors: orderBasisVectors,
+    // Exported only for testing.
+    _bubbleSortCount: bubbleSortCount,
+    _removeIdentities: removeIdentities
 };
 
 });

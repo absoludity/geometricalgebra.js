@@ -11,8 +11,10 @@ var MultiVectorTerm = function(factor, basis) {
             "of integers.");
     }
 
-    this.factor = factor;
-    this.basis = basis;
+    var simplified = utils.orderBasisVectors(basis);
+
+    this.factor = simplified.sign * factor;
+    this.basis = simplified.list;
 };
 
 return {

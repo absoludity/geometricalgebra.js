@@ -1,5 +1,6 @@
 define(['underscore', 'utils'], function(_, utils) {
 
+
 var MultiVectorTerm = function(factor, basis) {
     if (isNaN(factor)) {
         throw new TypeError(

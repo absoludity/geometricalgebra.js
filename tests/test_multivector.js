@@ -93,5 +93,49 @@ test("Terms are sorted within the multivector.", function() {
     ]);
 });
 
+
+module("MultiVector toString checks.");
+
+
+test("A multivector can be printed as a string.", function() {
+    var examples = [{
+        terms: [
+            6,
+            new mv.MultiVectorTerm(3, [1, 2]),
+            new mv.MultiVectorTerm(-1, [2, 3]),
+            new mv.MultiVectorTerm(3, [1, 2, 3]),
+        ],
+        expected_string: "6 + 3xy - 1yz + 3xyz",
+    }, {
+        terms: [
+            6,
+            new mv.MultiVectorTerm(3, [1, 4]),
+            new mv.MultiVectorTerm(-1, [2, 3]),
+            new mv.MultiVectorTerm(3, [1, 2, 3]),
+        ],
+        expected_string: "6 + 3e1e4 - 1e2e3 + 3e1e2e3",
+    }];
+
+    _.each(examples, function(example) {
+        equal(new mv.MultiVector(example.terms).toString(),
+              example.expected_string);
+    });
+});
+
+
+test("The e1 notation can be used explicitely with " +
+     "smaller grades.", function() {
+    var terms = [
+        6,
+        new mv.MultiVectorTerm(3, [1, 2]),
+        new mv.MultiVectorTerm(-1, [2, 3]),
+        new mv.MultiVectorTerm(3, [1, 2, 3]),
+    ];
+
+    result = new mv.MultiVector(terms).toString({xyz: false});
+
+    equal(result, "6 + 3e1e2 - 1e2e3 + 3e1e2e3");
+});
+
 });
 

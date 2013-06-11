@@ -8,6 +8,12 @@ var MultiVector = function(terms) {
 };
 
 
+MultiVector.prototype.toString = function() {
+    var terms = _.map(this.terms, function(term) { return term.toString();});
+    return terms.join(" + ").replace("+ -", "- ");
+};
+
+// private helper functions.
 var convertNumbersToTerms = function(terms) {
     return _.map(terms, function(term) {
         return _.isNumber(term) ? new mvt.MultiVectorTerm(term, []) : term;

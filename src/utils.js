@@ -73,6 +73,7 @@ var orderBasisVectors = function(list) {
 
 };
 
+
 return {
     isArrayOfInts: isArrayOfInts,
     orderBasisVectors: orderBasisVectors,

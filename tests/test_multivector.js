@@ -20,5 +20,56 @@ test("MultiVector constructor sets terms by value.", function() {
     ]);
 });
 
+
+test("Initial terms must be MultiVectorTerms or numbers.", function() {
+    var bad_examples = [
+        [mv.MultiVectorTerm(1, [1]), 3, "a"],
+        [mv.MultiVectorTerm(1, [1]), null, 3],
+        [mv.MultiVectorTerm(1, [1]), 3, undefined],
+    ];
+
+    _.each(bad_examples, function(bad_example) {
+        throws(function() { mv.MultiVector(bad_example); },
+               TypeError,
+               "Terms for a multivector must be MultiVectorTerms " +
+               "or numbers.");
+    });
+});
+
+
+test("Numbers passed to constructor are converted to terms.", function() {
+    var terms = [
+        new mv.MultiVectorTerm(1, [2, 3]),
+        -6.75,
+    ];
+
+    var vector = new mv.MultiVector(terms);
+
+    deepEqual(vector.terms, [
+        new mv.MultiVectorTerm(1, [2, 3]),
+        new mv.MultiVectorTerm(-6.75, []),
+    ]);
+});
+
+
+test("Like terms are collected during construction.", function() {
+    var examples = [{
+        terms: [
+            new mv.MultiVectorTerm(1, [2, 3]),
+            new mv.MultiVectorTerm(3, [2, 3]),
+        ],
+        expected_terms: [
+            new mv.MultiVectorTerm(4, [2, 3]),
+        ]
+    }];
+
+    _.each(examples, function(example) {
+        var result = new mv.MultiVector(example.terms);
+        deepEqual(result.terms, example.expected_terms,
+                  "Like terms are collected.");
+    });
+
+});
+
 });
 

@@ -132,7 +132,7 @@ test("The e1 notation can be used explicitely with " +
         new mv.MultiVectorTerm(3, [1, 2, 3]),
     ];
 
-    result = new mv.MultiVector(terms).toString({xyz: false});
+    var result = new mv.MultiVector(terms).toString({xyz: false});
 
     equal(result, "6 + 3e1e2 - 1e2e3 + 3e1e2e3");
 });

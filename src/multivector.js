@@ -8,8 +8,10 @@ var MultiVector = function(terms) {
 };
 
 
-MultiVector.prototype.toString = function() {
-    var terms = _.map(this.terms, function(term) { return term.toString();});
+MultiVector.prototype.toString = function(options) {
+    options = _.isUndefined(options) ? {xyz: true} : options;
+    options.xyz = (maxDimensionForMultiVector(this) > 3) ? false : options.xyz;
+    var terms = _.map(this.terms, function(term) { return term.toString(options);});
     return terms.join(" + ").replace("+ -", "- ");
 };
 
@@ -36,6 +38,13 @@ var sortByGradeThenBasis = function(terms) {
     return _.sortBy(terms, function(term) {
         return [term.basis.length, term.basis];
     });
+};
+
+
+var maxDimensionForMultiVector = function(multivector) {
+    return _.reduce(multivector.terms, function(memo, term) {
+        return _.max(term.basis.concat([memo]));
+    }, 0);
 };
 
 

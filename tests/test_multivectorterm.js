@@ -211,4 +211,29 @@ test("Terms with more than 3 dimensions automatically use e1 " +
 
 });
 
+
+module("MultiVectorTerm parsing checks.");
+
+
+test("A MultiVectorTerm can be created via parsing a string.", function() {
+    var examples = [{
+        string: "3xz",
+        expected: new mvt.MultiVectorTerm(3, [1, 3]),
+    }, {
+        string: "+4e1e2",
+        expected: new mvt.MultiVectorTerm(4, [1, 2]),
+    }, {
+        string: "+ 5zx",
+        expected: new mvt.MultiVectorTerm(-5, [1, 3]),
+    }, {
+        string: "-1e12e8",
+        expected: new mvt.MultiVectorTerm(1, [8, 12]),
+    }];
+
+    _.each(examples, function(example) {
+        deepEqual(mvt.MultiVectorTerm.parse(example.string),
+                  example.expected);
+    });
+});
+
 });

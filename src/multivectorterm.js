@@ -52,6 +52,42 @@ MultiVectorTerm.prototype.toString = function(options) {
 };
 
 
+var multivectorterm_re = /^(-|\+)?\s*(\d*)([xyz]*|(?:e\d+)*)\s*$/;
+
+MultiVectorTerm.parse = function(string) {
+    var matches = string.match(multivectorterm_re);
+    if (_.isNull(matches)) {
+        throw new TypeError(
+            "Cannot parse '" + string + "' as a multivector term.");
+    }
+    var sign = matches[1];
+    var factor = matches[2];
+    factor = (factor.length === 0) ? 1 : parseInt(factor, 10);
+    factor = (sign === '-') ? factor * -1 : factor;
+
+    var basis = matches[3];
+    if (basis.length === 0) {
+        basis = [];
+    } else if (basis[0] === 'e') {
+        basis = basis.slice(1).split('e');
+        basis = _.map(basis, function(base) {
+            return parseInt(base, 10);
+        });
+    } else {
+        basis = _.map(basis, function(base) {
+            var dimension = MultiVectorTerm.THREE_DIMENSION_LABELS.indexOf(
+            base);
+            if (dimension === -1) {
+                throw new TypeError(
+                    "Cannot parse '" + string + "' as a multivector term.");
+            }
+            return dimension;
+        });
+    }
+    return new MultiVectorTerm(factor, basis);
+};
+
+
 return {
     MultiVectorTerm: MultiVectorTerm
 };

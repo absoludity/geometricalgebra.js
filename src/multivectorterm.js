@@ -52,7 +52,8 @@ MultiVectorTerm.prototype.toString = function(options) {
 };
 
 
-var multivectorterm_re = /^(-|\+)?\s*(\d*)([xyz]*|(?:e\d+)*)\s*$/;
+var multivectorterm_re = /^(-|\+)?\s*(\d*\.?\d*)([xyz]*|(?:e\d+)*)\s*$/;
+
 
 MultiVectorTerm.parse = function(string) {
     var matches = string.match(multivectorterm_re);
@@ -60,18 +61,29 @@ MultiVectorTerm.parse = function(string) {
         throw new TypeError(
             "Cannot parse '" + string + "' as a multivector term.");
     }
+    var factor = parseFactor(matches);
+    var basis = parseBasis(matches);
+
+    return new MultiVectorTerm(factor, basis);
+};
+
+
+var parseFactor = function(matches) {
     var sign = matches[1];
     var factor = matches[2];
-    factor = (factor.length === 0) ? 1 : parseInt(factor, 10);
-    factor = (sign === '-') ? factor * -1 : factor;
+    factor = (factor.length === 0) ? 1 : parseFloat(factor, 10);
+    return (sign === '-') ? factor * -1 : factor;
+};
 
+
+var parseBasis = function(matches) {
     var basis = matches[3];
     if (basis.length === 0) {
         basis = [];
     } else if (basis[0] === 'e') {
         basis = basis.slice(1).split('e');
         basis = _.map(basis, function(base) {
-            return parseInt(base, 10);
+            return parseFloat(base, 10);
         });
     } else {
         basis = _.map(basis, function(base) {
@@ -79,12 +91,12 @@ MultiVectorTerm.parse = function(string) {
             base);
             if (dimension === -1) {
                 throw new TypeError(
-                    "Cannot parse '" + string + "' as a multivector term.");
+                    "Cannot parse '" + basis + "' as the multivector basis.");
             }
             return dimension;
         });
     }
-    return new MultiVectorTerm(factor, basis);
+    return basis;
 };
 
 

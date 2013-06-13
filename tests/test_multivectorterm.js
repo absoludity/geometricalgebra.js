@@ -223,8 +223,8 @@ test("A MultiVectorTerm can be created via parsing a string.", function() {
         string: "+4e1e2",
         expected: new mvt.MultiVectorTerm(4, [1, 2]),
     }, {
-        string: "+ 5zx",
-        expected: new mvt.MultiVectorTerm(-5, [1, 3]),
+        string: "+ 5.345zx",
+        expected: new mvt.MultiVectorTerm(-5.345, [1, 3]),
     }, {
         string: "-1e12e8",
         expected: new mvt.MultiVectorTerm(1, [8, 12]),
@@ -233,6 +233,20 @@ test("A MultiVectorTerm can be created via parsing a string.", function() {
     _.each(examples, function(example) {
         deepEqual(mvt.MultiVectorTerm.parse(example.string),
                   example.expected);
+    });
+});
+
+
+test("A TypeError is thrown when a string cannot be parsed as " +
+     "a term.", function() {
+    var examples = [
+        "3xza",
+        "a4xy",
+        "3e3e4e",
+    ];
+
+    _.each(examples, function(example) {
+        throws(function() { mvt.MultiVectorTerm.parse(example);});
     });
 });
 

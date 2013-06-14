@@ -12,6 +12,8 @@ test("MultiVector constructor sets terms by value.", function() {
     ];
 
     var vector = new mv.MultiVector(terms);
+    // Updating the term that was used to create the multivector
+    // has no effect.
     term.basis[1] = 2;
 
     deepEqual(vector.terms, [
@@ -52,6 +54,18 @@ test("Numbers passed to constructor are converted to terms.", function() {
 });
 
 
+test("A string representation can be used to construct " +
+     "a multivector.", function() {
+    var vector = new mv.MultiVector("3 + 2xy - 5xz");
+
+    deepEqual(vector.terms, [
+        new mv.MultiVectorTerm(3, []),
+        new mv.MultiVectorTerm(2, [1, 2]),
+        new mv.MultiVectorTerm(-5, [1, 3]),
+    ]);
+});
+
+
 test("Like terms are collected during construction.", function() {
     var examples = [{
         terms: [
@@ -63,7 +77,13 @@ test("Like terms are collected during construction.", function() {
         expected_terms: [
             new mv.MultiVectorTerm(9, []),
             new mv.MultiVectorTerm(4, [2, 3]),
-        ]
+        ],
+    }, {
+        terms: [
+            new mv.MultiVectorTerm(3, [1, 2]),
+            new mv.MultiVectorTerm(-3, [1, 2]),
+        ],
+        expected_terms: [],
     }];
 
     _.each(examples, function(example) {
@@ -136,6 +156,62 @@ test("The e1 notation can be used explicitely with " +
 
     equal(result, "6 + 3e1e2 - 1e2e3 + 3e1e2e3");
 });
+
+
+module("MultiVector parsing checks.");
+
+
+test("A MultiVector can be created via parsing a string.", function() {
+    var examples = [{
+        string: "4 + 3xz",
+        expected: new mv.MultiVector([4, new mv.MultiVectorTerm(3, [1, 3])]),
+    }, {
+        string: " -3xy + 4e1e2",
+        expected: new mv.MultiVector([new mv.MultiVectorTerm(1, [1, 2])]),
+    }, {
+        string: "+ 5.345zx",
+        expected: new mv.MultiVector([new mv.MultiVectorTerm(-5.345, [1, 3])]),
+    }, {
+        string: "-1e12e8 - 1 + 2xz",
+        expected: new mv.MultiVector([
+            new mv.MultiVectorTerm(-1, [12, 8]),
+            new mv.MultiVectorTerm(2, [1, 3]),
+            -1,
+        ]),
+    }];
+
+    _.each(examples, function(example) {
+        deepEqual(mv.MultiVector.parse(example.string),
+                  example.expected);
+    });
+});
+
+
+module("MultiVector multiplication checks.");
+
+
+test("Two multivectors can be multiplied.", function() {
+    var examples = [{
+        one: new mv.MultiVector("1x + 2y + 3z"),
+        two: new mv.MultiVector("2x + 3y + 4z"),
+        expected: new mv.MultiVector("20 - 1xy - 2xz - 1yz"),
+    }, {
+        one: new mv.MultiVector("5x + 5y + 5z"),
+        two: new mv.MultiVector("5x + 5y + 5z"),
+        expected: new mv.MultiVector("75"),
+    }, {
+        one: new mv.MultiVector("0"),
+        two: new mv.MultiVector("5x + 5y + 5z"),
+        expected: new mv.MultiVector("0"),
+    }];
+
+    _.each(examples, function(example) {
+        equal(example.one.mul(example.two).toString(),
+              example.expected.toString());
+    });
+
+});
+
 
 });
 

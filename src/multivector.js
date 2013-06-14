@@ -52,6 +52,20 @@ MultiVector.prototype.mul = function(that) {
     return new MultiVector(terms);
 };
 
+
+MultiVector.prototype.add = function(that) {
+    return new MultiVector(this.terms.concat(that.terms));
+};
+
+
+MultiVector.prototype.sub = function(that) {
+    return new MultiVector(this.terms.concat(
+        _.map(that.terms, function(term) {
+            return new mvt.MultiVectorTerm(-1 * term.factor, term.basis);
+        })));
+};
+
+
 // private helper functions.
 var convertNumbersToTerms = function(terms) {
     return _.map(terms, function(term) {

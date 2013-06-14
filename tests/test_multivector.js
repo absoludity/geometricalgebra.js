@@ -203,15 +203,64 @@ test("Two multivectors can be multiplied.", function() {
         one: new mv.MultiVector("0"),
         two: new mv.MultiVector("5x + 5y + 5z"),
         expected: new mv.MultiVector("0"),
+    }, {
+        one: new mv.MultiVector("1"),
+        two: new mv.MultiVector("5x + 5y + 5z"),
+        expected: new mv.MultiVector("5x + 5y + 5z"),
     }];
 
     _.each(examples, function(example) {
         equal(example.one.mul(example.two).toString(),
               example.expected.toString());
     });
-
 });
 
+
+module("MultiVector addition checks.");
+
+
+test("Two multivectors can be added.", function() {
+    var examples = [{
+        one: new mv.MultiVector("1x + 2y + 3z"),
+        two: new mv.MultiVector("2x + 3y + 4z"),
+        expected: new mv.MultiVector("3x + 5y + 7z"),
+    }, {
+        one: new mv.MultiVector("5x + 5y + 5xz"),
+        two: new mv.MultiVector("5x + 5y + 5z"),
+        expected: new mv.MultiVector("10x + 10y + 5z + 5xz"),
+    }, {
+        one: new mv.MultiVector("0"),
+        two: new mv.MultiVector("5x + 5y + 5z"),
+        expected: new mv.MultiVector("5x + 5y + 5z"),
+    }];
+
+    _.each(examples, function(example) {
+        equal(example.one.add(example.two).toString(),
+              example.expected.toString());
+    });
+});
+
+
+test("Two multivectors can be subtracted.", function() {
+    var examples = [{
+        one: new mv.MultiVector("1x + 2y + 3z"),
+        two: new mv.MultiVector("2x + 3y + 4z"),
+        expected: new mv.MultiVector("-1x - 1y - 1z"),
+    }, {
+        one: new mv.MultiVector("5x + 5y + 5xz"),
+        two: new mv.MultiVector("5x + 5y + 5z"),
+        expected: new mv.MultiVector("-5z + 5xz"),
+    }, {
+        one: new mv.MultiVector("5x + 5y + 5z"),
+        two: new mv.MultiVector("0"),
+        expected: new mv.MultiVector("5x + 5y + 5z"),
+    }];
+
+    _.each(examples, function(example) {
+        equal(example.one.sub(example.two).toString(),
+              example.expected.toString());
+    });
+});
 
 });
 

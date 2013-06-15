@@ -1,6 +1,7 @@
 {
   "name": "geometricalgebra.js",
   "version": "0.1.0",
+  "//": "The following modules are required only for develpment or playing in the nodejs console.",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-cli": "0.1.9",
@@ -8,8 +9,6 @@
     "grunt-contrib-watch": ">=0.3.1",
     "grunt-notify": "~0.2.4",
     "grunt-contrib-jshint": "~0.6.0",
-
-    "//": "The following two libs are required only when playing in nodejs.",
     "requirejs": "~2.1.6",
     "underscore": "~1.4.4"
   }

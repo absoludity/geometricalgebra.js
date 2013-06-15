@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+console.log("Create a new multivector with: \n" +
+            "var v1 = new mv.MultiVector(\"3x + 2y + z\");");
+
+var mvrepl = require("repl").start("> ");
+var requirejs = require('requirejs');
+
+requirejs.config({
+    baseUrl: __dirname + "/..",
+    // We omit underscore here as we need to use node's version
+    // while in the repl.
+    paths: {
+        "multivectorterm": "src/multivectorterm",
+        "multivector": "src/multivector",
+        "utils": "src/utils"
+    }
+});
+
+mvrepl.context['mv'] = requirejs('multivector');
+mvrepl.context['requirejs'] = requirejs;
+

@@ -262,5 +262,24 @@ test("Two multivectors can be subtracted.", function() {
     });
 });
 
+
+test("The geometric product is associative for vectors", function() {
+    var examples = [[
+        new mv.MultiVector("1x + 2y + 3z"),
+        new mv.MultiVector("2x + 3y + 4z"),
+        new mv.MultiVector("-3x + 4.5y - 8z"),
+    ], [
+        new mv.MultiVector("-x + 2y - 3z"),
+        new mv.MultiVector("2x + 3y + 4z"),
+        new mv.MultiVector("-9x + 25y + 20z"),
+    ]];
+
+    _.each(examples, function(example) {
+        equal(
+            (example[0].mul(example[1])).mul(example[2]).toString(),
+            example[0].mul((example[1].mul(example[2]))).toString());
+    });
+});
+
 });
 

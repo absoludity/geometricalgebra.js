@@ -3,7 +3,9 @@ Geometric Algebra with JS
 
 Copyright 2013 Michael Nelson <michael@liveandletlearn.net>
 
-Geometric Algebra is a different way of thinking about vectors and geometry. You can read more on the [Wikipedia article](http://en.wikipedia.org/wiki/Geometric_algebra)
+Geometric Algebra provides a different way of thinking about vectors,
+geometry and its applications to physics. You can read more on the
+[Wikipedia article](http://en.wikipedia.org/wiki/Geometric_algebra)
 but be warned that it gets (unnecessarily) complicated rather quickly.
 I've created this JavaScript port of an
 [old Python geometric algebra library](https://launchpad.net/pymultivector)
@@ -84,6 +86,9 @@ $ bin/grunt test
 
 Or if you run `bin/grunt` in a console, it will by default run tests
 and lint the code on each file save.
+
+Debugging test output is much easier in a browser - the same tests
+will render in your favourite browser simply by opening the tests/index.html file.
 
 
 Using geometricalgebra.js in the browser

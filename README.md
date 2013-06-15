@@ -4,7 +4,7 @@ Geometric Algebra with JS
 Copyright 2013 Michael Nelson <michael@liveandletlearn.net>
 
 Geometric Algebra provides a different way of thinking about vectors,
-geometry and its applications to physics. You can read more on the
+geometry and their applications to physics. You can read more on the
 [Wikipedia article](http://en.wikipedia.org/wiki/Geometric_algebra)
 but be warned that it gets (unnecessarily) complicated rather quickly.
 I've created this JavaScript port of an
@@ -89,6 +89,9 @@ and lint the code on each file save.
 
 Debugging test output is much easier in a browser - the same tests
 will render in your favourite browser simply by opening the tests/index.html file.
+
+Current build status: [![Build Status](https://travis-ci.org/absoludity/geometricalgebra.js.png)](https://travis-ci.org/absoludity/geometricalgebra.js)
+
 
 
 Using geometricalgebra.js in the browser

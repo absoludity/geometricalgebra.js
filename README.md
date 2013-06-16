@@ -110,3 +110,43 @@ require(['multivector'], function(mv) {
 });
 ```
 
+
+Warning - differences from established Geometric Algebra
+--------------------------------------------------------
+
+Most formal definitions of geometric algebra define the geometric product as
+a combination of an inner and outer product. This implementation doesn't
+define these products separately (although they can be derived), instead it
+assumes only two axioms:
+
+Given any set of basis vectors (technically, unit-length orthogonal vectors):
+
+1. The product of a basis vector with itself is unity (ie. **xx** == 1 ==
+   **yy**).
+1. The product of two different basis vectors is anti-communative (ie. **xy** ==
+   -**yx**).
+
+
+With only these two assumptions the library can demonstrate other properties
+of geometric algebra, such as the associativity of the geometric product
+for vectors:
+
+```javascript
+var v3 = new mv.MultiVector("-5x - 1y");
+v1.mul(v2.mul(v3)).toString()
+'-41x - 3y'
+(v1.mul(v2)).mul(v3).toString()
+'-41x - 3y'
+```
+
+**But** these two assumptions also ensure that an outer product is not
+associative - just like the traditional cross-product of two vectors - whereas
+all definitions that I've seen of [Geometric Algebra] [1][2] define the outer product
+as an associative product. Consider yourself warned - geometricalgebra.js may
+be crack.
+
+[1]: See equation 2.1 of [The Geometric Algebra of Spacetime](http://www.mrao.cam.ac.uk/~clifford/publications/ps/imag_numbs.pdf) "By construction, the outer product is associative".
+[2]: See equation 1.22 of [Geometric Algebra and Applications to Physics](http://books.google.de/books?id=AXTQXnws8E8C&pg=PA17&dq=outer+product+associative), then scroll back to the start of the derivation at equation 1.16a (the first one, there are two equation 1.16as on page 15) where it appears to assume the associativity of the outer product.
+
+
+

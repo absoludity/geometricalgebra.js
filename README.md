@@ -141,13 +141,13 @@ v1.mul(v2.mul(v3)).toString()
 
 **But** these two assumptions also ensure that an outer product is not
 associative - just like the traditional cross-product of two vectors - whereas
-all definitions that I've seen of [Geometric Algebra][1][2]define the outer product
-as an associative product. Consider yourself warned - geometricalgebra.js may
-be crack.
+all definitions that I've seen of Geometric Algebra define the outer product
+as an associative product:
 
-[1]: http://www.mrao.cam.ac.uk/~clifford/publications/ps/imag_numbs.pdf "See equation 2.1 of 'The Geometric Algebra of Spacetime' which is prefixed with 'By construction, the outer product is associative'."
+ * [Imaginary numbers are not real: The Geometric Algebra of Spacetime](http://www.mrao.cam.ac.uk/~clifford/publications/ps/imag_numbs.pdf):
+   See equation 2.1 of 'The Geometric Algebra of Spacetime' which is prefixed with 'By construction, the outer product is associative'.
+ * [Geometric Algebra and Applications to Physics](http://books.google.de/books?id=AXTQXnws8E8C&pg=PA17&dq=outer+product+associative):
+   Equation 1.22 then scroll back to the start of the derivation at equation 1.16a (the first one, there are two equation 1.16as on page 15)
+   where it seems to assume the associativity of the outer product.
 
-[2]: http://books.google.de/books?id=AXTQXnws8E8C&pg=PA17&dq=outer+product+associative "Equation 1.22 of 'Geometric Algebra and Applications to Physics', then scroll back to the start of the derivation at equation 1.16a (the first one, there are two equation 1.16as on page 15) where it appears to assume the associativity of the outer product."
-
-
-
+Consider yourself warned - this geometricalgebra.js lib could be crack.

@@ -23,26 +23,3 @@
 // ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-require.config({
-    baseUrl: "..",
-    paths: {
-        "underscore": "src/lib/underscore-min",
-        "multivectorterm": "src/multivectorterm",
-        "multivector": "src/multivector",
-        "utils": "src/utils"
-    },
-    shim: {
-        underscore: {
-            exports: '_'
-        }
-    }
-});
-
-
-require([
-    "tests/test_multivectorterm",
-    "tests/test_multivector",
-    "tests/test_utils",
-], function() {
-    QUnit.start();
-});

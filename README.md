@@ -1,7 +1,7 @@
 Geometric Algebra with JS
 =========================
 
-Copyright 2013 Michael Nelson <michael@liveandletlearn.net>
+Copyright (c) 2013 - Michael Nelson <absoludity@gmail.com>.
 
 Geometric Algebra provides a different way of thinking about vectors,
 geometry and their applications to physics. You can read more on the

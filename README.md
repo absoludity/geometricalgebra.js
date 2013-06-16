@@ -121,10 +121,8 @@ assumes only two axioms:
 
 Given any set of basis vectors (technically, unit-length orthogonal vectors):
 
-1. The product of a basis vector with itself is unity (ie. **xx** == 1 ==
-   **yy**).
-1. The product of two different basis vectors is anti-communative (ie. **xy** ==
-   - **yx**).
+1. The product of a basis vector with itself is unity (ie. **xx** == 1 == **yy**).
+1. The product of two different basis vectors is anti-communative (ie. **xy** == - **yx**).
 
 
 With only these two assumptions the library can demonstrate other properties
@@ -140,8 +138,8 @@ v1.mul(v2.mul(v3)).toString()
 ```
 
 **But** these two assumptions also ensure that an outer product is not
-associative - just like the traditional cross-product of two vectors - whereas
-all definitions that I've seen of Geometric Algebra define the outer product
+associative - just like the traditional cross-product of two vectors - but unlike
+all definitions that I've seen of Geometric Algebra, which define the outer product
 as an associative product:
 
  * [Imaginary numbers are not real: The Geometric Algebra of Spacetime](http://www.mrao.cam.ac.uk/~clifford/publications/ps/imag_numbs.pdf):

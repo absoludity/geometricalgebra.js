@@ -23,17 +23,17 @@
 // ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-define(['underscore', 'multivector'], function(_, mv) {
+define(['underscore', 'multivector', 'multivectorterm'], function(_, mv, mvt) {
 
 
 module("MultiVector constructor checks.");
 
 
 test("MultiVector constructor sets terms by value.", function() {
-    var term = new mv.MultiVectorTerm(1, [1, 3]);
+    var term = new mvt.MultiVectorTerm(1, [1, 3]);
     var terms = [
         term,
-        new mv.MultiVectorTerm(1, [2, 3]),
+        new mvt.MultiVectorTerm(1, [2, 3]),
     ];
 
     var vector = new mv.MultiVector(terms);
@@ -42,17 +42,17 @@ test("MultiVector constructor sets terms by value.", function() {
     term.basis[1] = 2;
 
     deepEqual(vector.terms, [
-        new mv.MultiVectorTerm(1, [1, 3]),
-        new mv.MultiVectorTerm(1, [2, 3]),
+        new mvt.MultiVectorTerm(1, [1, 3]),
+        new mvt.MultiVectorTerm(1, [2, 3]),
     ]);
 });
 
 
 test("Initial terms must be MultiVectorTerms or numbers.", function() {
     var bad_examples = [
-        [mv.MultiVectorTerm(1, [1]), 3, "a"],
-        [mv.MultiVectorTerm(1, [1]), null, 3],
-        [mv.MultiVectorTerm(1, [1]), 3, undefined],
+        [mvt.MultiVectorTerm(1, [1]), 3, "a"],
+        [mvt.MultiVectorTerm(1, [1]), null, 3],
+        [mvt.MultiVectorTerm(1, [1]), 3, undefined],
     ];
 
     _.each(bad_examples, function(bad_example) {
@@ -67,14 +67,14 @@ test("Initial terms must be MultiVectorTerms or numbers.", function() {
 test("Numbers passed to constructor are converted to terms.", function() {
     var terms = [
         -6.75,
-        new mv.MultiVectorTerm(1, [2, 3]),
+        new mvt.MultiVectorTerm(1, [2, 3]),
     ];
 
     var vector = new mv.MultiVector(terms);
 
     deepEqual(vector.terms, [
-        new mv.MultiVectorTerm(-6.75, []),
-        new mv.MultiVectorTerm(1, [2, 3]),
+        new mvt.MultiVectorTerm(-6.75, []),
+        new mvt.MultiVectorTerm(1, [2, 3]),
     ]);
 });
 
@@ -84,10 +84,10 @@ test("A string representation can be used to construct " +
     var vector = new mv.MultiVector("3 + y - 2xy - 5xz");
 
     deepEqual(vector.terms, [
-        new mv.MultiVectorTerm(3, []),
-        new mv.MultiVectorTerm(1, [2]),
-        new mv.MultiVectorTerm(-2, [1, 2]),
-        new mv.MultiVectorTerm(-5, [1, 3]),
+        new mvt.MultiVectorTerm(3, []),
+        new mvt.MultiVectorTerm(1, [2]),
+        new mvt.MultiVectorTerm(-2, [1, 2]),
+        new mvt.MultiVectorTerm(-5, [1, 3]),
     ]);
 });
 
@@ -122,18 +122,18 @@ test("Like terms are collected during construction.", function() {
     var examples = [{
         terms: [
             6,
-            new mv.MultiVectorTerm(3, [2, 2]),
-            new mv.MultiVectorTerm(1, [2, 3]),
-            new mv.MultiVectorTerm(3, [2, 3]),
+            new mvt.MultiVectorTerm(3, [2, 2]),
+            new mvt.MultiVectorTerm(1, [2, 3]),
+            new mvt.MultiVectorTerm(3, [2, 3]),
         ],
         expected_terms: [
-            new mv.MultiVectorTerm(9, []),
-            new mv.MultiVectorTerm(4, [2, 3]),
+            new mvt.MultiVectorTerm(9, []),
+            new mvt.MultiVectorTerm(4, [2, 3]),
         ],
     }, {
         terms: [
-            new mv.MultiVectorTerm(3, [1, 2]),
-            new mv.MultiVectorTerm(-3, [1, 2]),
+            new mvt.MultiVectorTerm(3, [1, 2]),
+            new mvt.MultiVectorTerm(-3, [1, 2]),
         ],
         expected_terms: [],
     }];
@@ -149,19 +149,19 @@ test("Like terms are collected during construction.", function() {
 test("Terms are sorted within the multivector.", function() {
 
     var result = new mv.MultiVector([
-        new mv.MultiVectorTerm(3, [2, 3, 1]),
-        new mv.MultiVectorTerm(3, [2, 3]),
+        new mvt.MultiVectorTerm(3, [2, 3, 1]),
+        new mvt.MultiVectorTerm(3, [2, 3]),
         6,
-        new mv.MultiVectorTerm(3, [1, 3]),
-        new mv.MultiVectorTerm(3, [1, 2]),
+        new mvt.MultiVectorTerm(3, [1, 3]),
+        new mvt.MultiVectorTerm(3, [1, 2]),
     ]);
 
     deepEqual(result.terms, [
-        new mv.MultiVectorTerm(6, []),
-        new mv.MultiVectorTerm(3, [1, 2]),
-        new mv.MultiVectorTerm(3, [1, 3]),
-        new mv.MultiVectorTerm(3, [2, 3]),
-        new mv.MultiVectorTerm(3, [1, 2, 3]),
+        new mvt.MultiVectorTerm(6, []),
+        new mvt.MultiVectorTerm(3, [1, 2]),
+        new mvt.MultiVectorTerm(3, [1, 3]),
+        new mvt.MultiVectorTerm(3, [2, 3]),
+        new mvt.MultiVectorTerm(3, [1, 2, 3]),
     ]);
 });
 
@@ -173,17 +173,17 @@ test("A multivector can be printed as a string.", function() {
     var examples = [{
         terms: [
             6,
-            new mv.MultiVectorTerm(3, [1, 2]),
-            new mv.MultiVectorTerm(-1, [2, 3]),
-            new mv.MultiVectorTerm(3, [1, 2, 3]),
+            new mvt.MultiVectorTerm(3, [1, 2]),
+            new mvt.MultiVectorTerm(-1, [2, 3]),
+            new mvt.MultiVectorTerm(3, [1, 2, 3]),
         ],
         expected_string: "6 + 3xy - 1yz + 3xyz",
     }, {
         terms: [
             6,
-            new mv.MultiVectorTerm(3, [1, 4]),
-            new mv.MultiVectorTerm(-1, [2, 3]),
-            new mv.MultiVectorTerm(3, [1, 2, 3]),
+            new mvt.MultiVectorTerm(3, [1, 4]),
+            new mvt.MultiVectorTerm(-1, [2, 3]),
+            new mvt.MultiVectorTerm(3, [1, 2, 3]),
         ],
         expected_string: "6 + 3e1e4 - 1e2e3 + 3e1e2e3",
     }];
@@ -199,9 +199,9 @@ test("The e1 notation can be used explicitely with " +
      "smaller grades.", function() {
     var terms = [
         6,
-        new mv.MultiVectorTerm(3, [1, 2]),
-        new mv.MultiVectorTerm(-1, [2, 3]),
-        new mv.MultiVectorTerm(3, [1, 2, 3]),
+        new mvt.MultiVectorTerm(3, [1, 2]),
+        new mvt.MultiVectorTerm(-1, [2, 3]),
+        new mvt.MultiVectorTerm(3, [1, 2, 3]),
     ];
 
     var result = new mv.MultiVector(terms).toString({xyz: false});
@@ -216,18 +216,18 @@ module("MultiVector parsing checks.");
 test("A MultiVector can be created via parsing a string.", function() {
     var examples = [{
         string: "4 + 3xz",
-        expected: new mv.MultiVector([4, new mv.MultiVectorTerm(3, [1, 3])]),
+        expected: new mv.MultiVector([4, new mvt.MultiVectorTerm(3, [1, 3])]),
     }, {
         string: " -3xy + 4e1e2",
-        expected: new mv.MultiVector([new mv.MultiVectorTerm(1, [1, 2])]),
+        expected: new mv.MultiVector([new mvt.MultiVectorTerm(1, [1, 2])]),
     }, {
         string: "+ 5.345zx",
-        expected: new mv.MultiVector([new mv.MultiVectorTerm(-5.345, [1, 3])]),
+        expected: new mv.MultiVector([new mvt.MultiVectorTerm(-5.345, [1, 3])]),
     }, {
         string: "-1e12e8 - 1 + 2xz",
         expected: new mv.MultiVector([
-            new mv.MultiVectorTerm(-1, [12, 8]),
-            new mv.MultiVectorTerm(2, [1, 3]),
+            new mvt.MultiVectorTerm(-1, [12, 8]),
+            new mvt.MultiVectorTerm(2, [1, 3]),
             -1,
         ]),
     }];

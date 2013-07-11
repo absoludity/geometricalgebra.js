@@ -145,8 +145,7 @@ var maxDimensionForMultiVector = function(multivector) {
 
 
 return {
-    MultiVector: MultiVector,
-    MultiVectorTerm: mvt.MultiVectorTerm
+    MultiVector: MultiVector
 };
 
 });

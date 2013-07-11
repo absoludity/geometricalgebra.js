@@ -38,9 +38,10 @@ module.exports = function(grunt) {
                     "underscore": "src/lib/lodash.min",
                     "multivectorterm": "src/multivectorterm",
                     "multivector": "src/multivector",
+                    "geometricalgebra": "src/geometricalgebra",
                     "utils": "src/utils"
                 },
-                name: 'multivector',
+                name: 'geometricalgebra',
                 out: 'geometricalgebra.js'
             }
         }

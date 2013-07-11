@@ -26,16 +26,11 @@
 require.config({
     baseUrl: "..",
     paths: {
-        "underscore": "src/lib/underscore-min",
+        "underscore": "src/lib/lodash.min",
         "multivectorterm": "src/multivectorterm",
         "multivector": "src/multivector",
         "utils": "src/utils"
     },
-    shim: {
-        underscore: {
-            exports: '_'
-        }
-    }
 });
 
 

@@ -46,17 +46,32 @@ MultiVector.prototype.toString = function(options) {
 MultiVector.parseTerms = function(string) {
     var terms = [];
     var current_term = "";
+    var sign = '';
     _.each(string.trim(), function(c) {
-        if ((c === '-' || c === '+') && current_term.length > 0) {
-            terms.push(current_term);
-            current_term = c;
-        } else {
+        if (c === '+') {
+            if (current_term.length > 0) {
+                terms.push(sign + current_term);
+                current_term = '';
+                sign = '';
+            }
+        } else if (c === '-') {
+            if (current_term.length > 0) {
+                terms.push(sign + current_term);
+                current_term = '';
+                sign = '-';
+            } else {
+                if (sign === '') {
+                    sign = '-';
+                } else {
+                    sign = '';
+                }
+            }
+        } else if (c !== ' ') {
             current_term += c;
         }
     });
-    terms.push(current_term);
+    terms.push(sign + current_term);
     return _.map(terms, mvt.MultiVectorTerm.parse);
-
 };
 
 

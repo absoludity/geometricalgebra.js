@@ -10,7 +10,7 @@
     "grunt-notify": "~0.2.4",
     "grunt-contrib-jshint": "~0.6.0",
     "requirejs": "~2.1.6",
-    "underscore": "~1.4.4"
+    "grunt-contrib-requirejs": "~0.4.1"
   },
   "scripts": {
     "test": "bin/grunt test"

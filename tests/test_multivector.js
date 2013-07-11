@@ -81,13 +81,40 @@ test("Numbers passed to constructor are converted to terms.", function() {
 
 test("A string representation can be used to construct " +
      "a multivector.", function() {
-    var vector = new mv.MultiVector("3 + 2xy - 5xz");
+    var vector = new mv.MultiVector("3 + y - 2xy - 5xz");
 
     deepEqual(vector.terms, [
         new mv.MultiVectorTerm(3, []),
-        new mv.MultiVectorTerm(2, [1, 2]),
+        new mv.MultiVectorTerm(1, [2]),
+        new mv.MultiVectorTerm(-2, [1, 2]),
         new mv.MultiVectorTerm(-5, [1, 3]),
     ]);
+});
+
+
+test("String parsing is consistant with output.", function() {
+    var examples = [{
+        input: "5x+y",
+        output: "5x + 1y",
+    }, {
+        input: "5x + -y",
+        output: "5x - 1y",
+    }, {
+        input: "5x - +y",
+        output: "5x - 1y",
+    }, {
+        input: "5x - +2y",
+        output: "5x - 2y",
+    }, {
+        input: "5x - -2y",
+        output: "5x + 2y",
+    }];
+
+    _.each(examples, function(example) {
+        var result = new mv.MultiVector(example.input);
+        equal(result.toString(), example.output);
+    });
+
 });
 
 
